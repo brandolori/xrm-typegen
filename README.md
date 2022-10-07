@@ -2,7 +2,7 @@
 1. clone the repository
 2. `cd` into the folder
 3. `npm i`
-5. `np i -g .`
+5. `npm i -g .`
 
 # Usage
 Usage example:  
