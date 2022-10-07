@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { AuthenticationContext, TokenResponse } from 'adal-node';
 import { program } from 'commander';
 import { writeFile } from 'fs';
