@@ -1,10 +1,6 @@
 import { readFileSync } from 'fs';
 import { compile } from 'handlebars';
-
-export type Attribute = {
-    "@odata.type": string,
-    "LogicalName": string,
-}
+import { Attribute } from 'queries';
 
 const mapping: any = {
     "#Microsoft.Dynamics.CRM.LookupAttributeMetadata": "LookupAttribute",
@@ -27,8 +23,11 @@ export const render = (attributes: Attribute[], name: string): string => {
     const templateBuffer = readFileSync(`${__dirname}/template.hbs`);
     const template = compile(templateBuffer.toString());
 
+    // clean up the api response:
     const cleanedAttributes = attributes
+        // remove invalid lines, being the ones that have enpty parameters or that are not yet mapped
         .filter(el => el['@odata.type'] && el.LogicalName && Object.keys(mapping).includes(el['@odata.type']))
+        // "@" is not a valid character in handlebars, so we remove it
         .map(el => ({
             name: el.LogicalName,
             type: mapping[el['@odata.type']]

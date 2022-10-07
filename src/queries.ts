@@ -1,6 +1,5 @@
 import { TokenResponse } from 'adal-node';
 import fetch from 'node-fetch';
-import { Attribute } from 'renderer';
 
 const initHeader = (accessToken: string) => ({
     Authorization: `Bearer ${accessToken}`,
@@ -9,6 +8,11 @@ const initHeader = (accessToken: string) => ({
     'OData-MaxVersion': '4.0',
     'OData-Version': '4.0',
 });
+
+export type Attribute = {
+    "@odata.type": string,
+    "LogicalName": string,
+}
 
 type EntityDefinition = { Attributes: Attribute[], DisplayName: { LocalizedLabels: { Label: string }[] } }
 
@@ -25,7 +29,5 @@ export const getEntityDefinition = async (
             method: 'GET',
         },
     );
-    const json = await response.json();
-    return json;
-
+    return await response.json();
 };

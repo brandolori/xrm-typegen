@@ -2,7 +2,7 @@
 
 import { AuthenticationContext, TokenResponse } from 'adal-node';
 import { program } from 'commander';
-import { writeFile } from 'fs';
+import { writeFileSync } from 'fs';
 import { terms } from './terms';
 import { getEntityDefinition } from './queries';
 import { render } from './renderer';
@@ -19,19 +19,11 @@ program
         `${terms.AAD} authority. e.g. https://login.windows.net/myorg.onmicrosoft.com`,
     )
     .option('-c, --clientid <clientid>', 'OAuth Client Id', '51f81489-12ee-4a9e-aaae-a2591f45987d')
-    .option('-s, --solution <solution>', `Unique ${terms.d365} Solution Name`)
-    .option('-e, --entities <entities>', 'Comma seperated list of entities')
-    .option('-o, --output <output>', 'Output path', 'types');
+    .option('-e, --entity <entities>', 'The entity to create the typings for')
 
 program.addHelpText(
     'afterAll',
-    `
-e.g. XrmTypesGen --url https://myorg.crm11.dynamics.com/ --username username@myorg.onmicrosoft.com --password password123 --tenent https://login.windows.net/myorg.onmicrosoft.com --solution solutionname --output ./types
-
-e.g. XrmTypesGen --url https://myorg.crm11.dynamics.com/ --username username@myorg.onmicrosoft.com --password password123 --tenent https://login.windows.net/myorg.onmicrosoft.com --entities account,contact,lead --output ./types
-
-e.g. XrmTypesGen --url https://myorg.crm11.dynamics.com/ --tenent https://login.windows.net/myorg.onmicrosoft.com --entities "account,contact,lead" --output types --clientid myclientid --secret mysecret
-`,
+    "e.g. xrm-typegen --url https://myorg.crm11.dynamics.com/ --tenent https://login.windows.net/myorg.onmicrosoft.com --entity account --clientid myclientid --secret mysecret"
 );
 
 program.parse();
@@ -47,10 +39,9 @@ const Main = async (authToken: TokenResponse) => {
 
     const content = render(Attributes, capitalizedName)
 
-    writeFile(
+    writeFileSync(
         `./${capitalizedName}.d.ts`,
         content,
-        () => { },
     );
 
     console.log('Finished!');
