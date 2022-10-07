@@ -8,7 +8,7 @@ import { render } from './renderer'
 
 program
     .version(require('../package.json').version)
-    .name('xrmtypesgen')
+    .name('xrm-typegen')
 
     .requiredOption('-u, --url <url>', `Dynamics Url. e.g. https://myorg.crm11.dynamics.com/`)
     .requiredOption('-t, --tenent <tenent>', `AD authority. e.g. https://login.windows.net/myorg.onmicrosoft.com`)
