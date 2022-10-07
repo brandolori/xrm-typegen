@@ -6,4 +6,6 @@
 5. `np i -g .`
 
 # Usage
-Refer to the help message: `xrm-typegen --help`
+Usage example:  
+`xrm-typegen --url https://myorg.crm11.dynamics.com/ --tenent https://login.windows.net/myorg.onmicrosoft.com --entity account --clientid myclientid --secret mysecret`  
+For more information, refer to the help message: `xrm-typegen --help`
