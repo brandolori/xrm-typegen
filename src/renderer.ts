@@ -4,7 +4,6 @@ import { Attribute } from 'queries'
 
 const mapping: any = {
     "#Microsoft.Dynamics.CRM.LookupAttributeMetadata": "LookupAttribute",
-    "#Microsoft.Dynamics.CRM.PicklistAttributeMetadata": "LookupAttribute",
     "#Microsoft.Dynamics.CRM.StringAttributeMetadata": "StringAttribute",
     "#Microsoft.Dynamics.CRM.MemoAttributeMetadata": "StringAttribute",
     "#Microsoft.Dynamics.CRM.DateTimeAttributeMetadata": "DateAttribute",
@@ -14,6 +13,7 @@ const mapping: any = {
     "#Microsoft.Dynamics.CRM.BigIntAttributeMetadata": "NumberAttribute",
     "#Microsoft.Dynamics.CRM.DecimalAttributeMetadata": "NumberAttribute",
     "#Microsoft.Dynamics.CRM.BooleanAttributeMetadata": "BooleanAttribute",
+    "#Microsoft.Dynamics.CRM.PicklistAttributeMetadata": "OptionSetAttribute",
     "#Microsoft.Dynamics.CRM.StatusAttributeMetadata": "OptionSetAttribute",
     "#Microsoft.Dynamics.CRM.StateAttributeMetadata": "OptionSetAttribute"
 }

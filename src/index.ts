@@ -16,7 +16,7 @@ program
     .option('-p, --password <password>', `Password`)
     .option('-s, --secret <secret>', 'OAuth Client Secret')
     .option('-c, --clientid <clientid>', 'OAuth Client Id')
-    .option('-e, --entity <entities>', 'The entity to create the typings for')
+    .option('-e, --entity <entity>', 'The entity to create the typings for')
 
     .addHelpText(
         'afterAll',
@@ -29,7 +29,7 @@ const options = program.opts()
 const Main = async (authToken: TokenResponse) => {
     console.log('getting form metadata')
 
-    const { Attributes, DisplayName } = await getEntityDefinition(authToken, options.url, options.entities)
+    const { Attributes, DisplayName } = await getEntityDefinition(authToken, options.url, options.entity)
 
     const noSpaceName = DisplayName.LocalizedLabels[0].Label.replace(" ", "")
     const capitalizedName = noSpaceName.substring(0, 1).toUpperCase() + noSpaceName.substring(1)
