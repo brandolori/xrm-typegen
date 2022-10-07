@@ -5,6 +5,5 @@
 5. `npm i -g .`
 
 # Usage
-Usage example:  
-`xrm-typegen --url https://myorg.crm11.dynamics.com/ --tenent https://login.windows.net/myorg.onmicrosoft.com --entity account --clientid myclientid --secret mysecret`  
-For more information, refer to the help message: `xrm-typegen --help`
+Launch `xrm-typegen` in the folder where you keep your type definitions. The programm will guide you through setting up the connection.
+Then you can launch `xrm-typegen <entity-id>` and the program will generate the typings.

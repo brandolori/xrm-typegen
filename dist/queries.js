@@ -13,7 +13,7 @@ const initHeader = (accessToken) => ({
     'OData-Version': '4.0',
 });
 const getEntityDefinition = async (authToken, url, entity) => {
-    const response = await node_fetch_1.default(`${url}/api/data/v9.0/EntityDefinitions(LogicalName='${entity}')`
+    const response = await (0, node_fetch_1.default)(`${url}/api/data/v9.0/EntityDefinitions(LogicalName='${entity}')`
         + "?$expand=Attributes($select=LogicalName)", {
         headers: initHeader(authToken.accessToken),
         method: 'GET',
@@ -21,4 +21,3 @@ const getEntityDefinition = async (authToken, url, entity) => {
     return await response.json();
 };
 exports.getEntityDefinition = getEntityDefinition;
-//# sourceMappingURL=queries.js.map

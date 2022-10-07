@@ -19,8 +19,8 @@ const mapping = {
     "#Microsoft.Dynamics.CRM.StateAttributeMetadata": "OptionSetAttribute"
 };
 const render = (attributes, name) => {
-    const templateBuffer = fs_1.readFileSync(`${__dirname}/template.hbs`);
-    const template = handlebars_1.compile(templateBuffer.toString());
+    const templateBuffer = (0, fs_1.readFileSync)(`${__dirname}/template.hbs`);
+    const template = (0, handlebars_1.compile)(templateBuffer.toString());
     // clean up the api response:
     const cleanedAttributes = attributes
         // remove invalid lines, being the ones that have enpty parameters or that are not yet mapped
@@ -38,4 +38,3 @@ const render = (attributes, name) => {
 };
 exports.render = render;
 exports.default = exports.render;
-//# sourceMappingURL=renderer.js.map
