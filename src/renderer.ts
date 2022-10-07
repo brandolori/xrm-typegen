@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs';
-import { compile } from 'handlebars';
-import { Attribute } from 'queries';
+import { readFileSync } from 'fs'
+import { compile } from 'handlebars'
+import { Attribute } from 'queries'
 
 const mapping: any = {
     "#Microsoft.Dynamics.CRM.LookupAttributeMetadata": "LookupAttribute",
@@ -20,8 +20,8 @@ const mapping: any = {
 
 export const render = (attributes: Attribute[], name: string): string => {
 
-    const templateBuffer = readFileSync(`${__dirname}/template.hbs`);
-    const template = compile(templateBuffer.toString());
+    const templateBuffer = readFileSync(`${__dirname}/template.hbs`)
+    const template = compile(templateBuffer.toString())
 
     // clean up the api response:
     const cleanedAttributes = attributes
@@ -36,8 +36,8 @@ export const render = (attributes: Attribute[], name: string): string => {
     const dts = template({
         attributes: cleanedAttributes,
         name
-    });
-    return dts;
-};
+    })
+    return dts
+}
 
-export default render;
+export default render
