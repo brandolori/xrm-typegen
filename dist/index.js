@@ -1,18 +1,20 @@
 #!/usr/bin/env node
-import { getCredentials } from "./credentials.js";
-import { AuthenticationContext } from 'adal-node';
-import { writeFileSync } from 'fs';
-import { getEntityDefinition } from './queries.js';
-import { render } from './renderer.js';
-import initTypings from "./initTypings.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const credentials_js_1 = require("./credentials.js");
+const adal_node_1 = require("adal-node");
+const fs_1 = require("fs");
+const queries_js_1 = require("./queries.js");
+const renderer_js_1 = require("./renderer.js");
+const initTypings_js_1 = require("./initTypings.js");
 const main = async () => {
     if (process.argv.length > 2 && process.argv[2] == "--init-typings") {
-        initTypings();
+        (0, initTypings_js_1.default)();
         return;
     }
-    const credentials = await getCredentials();
+    const credentials = await (0, credentials_js_1.getCredentials)();
     console.log('authenticating');
-    const authContext = new AuthenticationContext(credentials.tenent);
+    const authContext = new adal_node_1.AuthenticationContext(credentials.tenent);
     authContext.acquireTokenWithClientCredentials(credentials.url, credentials.clientid, credentials.secret, async (error, response) => {
         if (error) {
             console.error(`Error: ${error.message}`);
@@ -25,13 +27,13 @@ const main = async () => {
             }
             const entity = process.argv[2];
             console.log('getting form metadata');
-            const { Attributes, DisplayName } = await getEntityDefinition(response, credentials.url, entity);
+            const { Attributes, DisplayName } = await (0, queries_js_1.getEntityDefinition)(response, credentials.url, entity);
             const noSpaceName = DisplayName.LocalizedLabels[0].Label.replace(" ", "");
             const capitalizedName = noSpaceName.substring(0, 1).toUpperCase() + noSpaceName.substring(1);
-            const content = render(Attributes, capitalizedName);
+            const content = (0, renderer_js_1.render)(Attributes, capitalizedName);
             const fileName = `./${capitalizedName}.d.ts`;
             console.log(`writing ${fileName}`);
-            writeFileSync(fileName, content);
+            (0, fs_1.writeFileSync)(fileName, content);
             console.log('Finished!');
         }
     });

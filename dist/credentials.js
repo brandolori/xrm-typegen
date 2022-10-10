@@ -1,16 +1,20 @@
-import { readFileSync, writeFileSync } from "fs";
-import Readline from "readline";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getCredentials = void 0;
+const fs_1 = require("fs");
+const readline_1 = require("readline");
 const filePath = "xrm-typegen-config.json";
-export const getCredentials = async () => {
+const getCredentials = async () => {
     try {
-        return JSON.parse(readFileSync(filePath).toString());
+        return JSON.parse((0, fs_1.readFileSync)(filePath).toString());
     }
     catch (Exception) {
         return await generateCredentials();
     }
 };
+exports.getCredentials = getCredentials;
 const promiseQuestion = (question) => new Promise((res, rej) => {
-    const rl = Readline.createInterface(process.stdin, process.stdout);
+    const rl = readline_1.default.createInterface(process.stdin, process.stdout);
     rl.question(question, (answ) => {
         rl.close();
         res(answ);
@@ -23,6 +27,6 @@ const generateCredentials = async () => {
         tenent: await promiseQuestion("Insert tenent: "),
         url: await promiseQuestion("Insert url: "),
     };
-    writeFileSync(filePath, JSON.stringify(obj));
+    (0, fs_1.writeFileSync)(filePath, JSON.stringify(obj));
     return obj;
 };
