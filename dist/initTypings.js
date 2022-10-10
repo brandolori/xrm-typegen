@@ -1,7 +1,6 @@
 import { copy } from "fs-extra";
-import { join } from "path";
 export default () => {
-    copy(join(__dirname, "..", "xrm-typedefs"), ".", (err) => {
+    copy(new URL("../xrm-typedefs", import.meta.url), ".", (err) => {
         if (err) {
             console.error(err);
         }

@@ -1,7 +1,6 @@
 import { readFileSync } from 'fs';
 import handlebars from 'handlebars';
 const { compile } = handlebars;
-import { join } from 'path';
 const mapping = {
     "#Microsoft.Dynamics.CRM.LookupAttributeMetadata": "LookupAttribute",
     "#Microsoft.Dynamics.CRM.StringAttributeMetadata": "StringAttribute",
@@ -18,7 +17,7 @@ const mapping = {
     "#Microsoft.Dynamics.CRM.StateAttributeMetadata": "OptionSetAttribute"
 };
 export const render = (attributes, name) => {
-    const templateBuffer = readFileSync(join(__dirname, "..", "src", "template.hbs"));
+    const templateBuffer = readFileSync(new URL("../src/template.hbs", import.meta.url));
     const template = compile(templateBuffer.toString());
     // clean up the api response:
     const cleanedAttributes = attributes

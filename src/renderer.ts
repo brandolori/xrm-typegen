@@ -1,7 +1,6 @@
 import { readFileSync } from 'fs'
 import handlebars from 'handlebars'
 const { compile } = handlebars
-import { join } from 'path'
 import { Attribute } from './queries.js'
 
 const mapping: any = {
@@ -21,8 +20,7 @@ const mapping: any = {
 }
 
 export const render = (attributes: Attribute[], name: string): string => {
-
-    const templateBuffer = readFileSync(join(__dirname, "..", "src", "template.hbs"))
+    const templateBuffer = readFileSync(new URL("../src/template.hbs", import.meta.url))
     const template = compile(templateBuffer.toString())
 
     // clean up the api response:
