@@ -14,6 +14,7 @@ declare global
         getValue: () => T;
         setValue: (value: T) => void;
         addOnChange: (onChange: (context: ExecutionContext) => void) => void;
+        removeOnChange: (onChange: (context: ExecutionContext) => void) => void;
         controls: Control[];
         setSubmitMode: (mode: "always" | "never" | "dirty") => void;
         getName: () => string;

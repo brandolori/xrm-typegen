@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-import { getCredentials } from "./credentials"
+import { getCredentials } from "./credentials.js"
 import { AuthenticationContext, TokenResponse } from 'adal-node'
 import { writeFileSync } from 'fs'
-import { getEntityDefinition } from './queries'
-import { render } from './renderer'
-import initTypings from "./initTypings"
+import { getEntityDefinition } from './queries.js'
+import { render } from './renderer.js'
+import initTypings from "./initTypings.js"
 
 const main = async () => {
 

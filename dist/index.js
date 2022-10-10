@@ -1,23 +1,18 @@
 #!/usr/bin/env node
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const credentials_1 = require("./credentials");
-const adal_node_1 = require("adal-node");
-const fs_1 = require("fs");
-const queries_1 = require("./queries");
-const renderer_1 = require("./renderer");
-const initTypings_1 = __importDefault(require("./initTypings"));
+import { getCredentials } from "./credentials.js";
+import { AuthenticationContext } from 'adal-node';
+import { writeFileSync } from 'fs';
+import { getEntityDefinition } from './queries.js';
+import { render } from './renderer.js';
+import initTypings from "./initTypings.js";
 const main = async () => {
     if (process.argv.length > 2 && process.argv[2] == "--init-typings") {
-        (0, initTypings_1.default)();
+        initTypings();
         return;
     }
-    const credentials = await (0, credentials_1.getCredentials)();
+    const credentials = await getCredentials();
     console.log('authenticating');
-    const authContext = new adal_node_1.AuthenticationContext(credentials.tenent);
+    const authContext = new AuthenticationContext(credentials.tenent);
     authContext.acquireTokenWithClientCredentials(credentials.url, credentials.clientid, credentials.secret, async (error, response) => {
         if (error) {
             console.error(`Error: ${error.message}`);
@@ -30,13 +25,13 @@ const main = async () => {
             }
             const entity = process.argv[2];
             console.log('getting form metadata');
-            const { Attributes, DisplayName } = await (0, queries_1.getEntityDefinition)(response, credentials.url, entity);
+            const { Attributes, DisplayName } = await getEntityDefinition(response, credentials.url, entity);
             const noSpaceName = DisplayName.LocalizedLabels[0].Label.replace(" ", "");
             const capitalizedName = noSpaceName.substring(0, 1).toUpperCase() + noSpaceName.substring(1);
-            const content = (0, renderer_1.render)(Attributes, capitalizedName);
+            const content = render(Attributes, capitalizedName);
             const fileName = `./${capitalizedName}.d.ts`;
             console.log(`writing ${fileName}`);
-            (0, fs_1.writeFileSync)(fileName, content);
+            writeFileSync(fileName, content);
             console.log('Finished!');
         }
     });

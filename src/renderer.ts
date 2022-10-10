@@ -1,7 +1,8 @@
 import { readFileSync } from 'fs'
-import { compile } from 'handlebars'
+import handlebars from 'handlebars'
+const { compile } = handlebars
 import { join } from 'path'
-import { Attribute } from './queries'
+import { Attribute } from './queries.js'
 
 const mapping: any = {
     "#Microsoft.Dynamics.CRM.LookupAttributeMetadata": "LookupAttribute",
