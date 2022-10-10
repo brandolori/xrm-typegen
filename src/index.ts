@@ -5,8 +5,15 @@ import { AuthenticationContext, TokenResponse } from 'adal-node'
 import { writeFileSync } from 'fs'
 import { getEntityDefinition } from './queries'
 import { render } from './renderer'
+import initTypings from "./initTypings"
 
 const main = async () => {
+
+    if (process.argv.length > 2 && process.argv[2] == "--init-typings") {
+        initTypings()
+        return
+    }
+
     const credentials = await getCredentials()
 
     console.log('authenticating')

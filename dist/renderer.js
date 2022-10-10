@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.render = void 0;
 const fs_1 = require("fs");
 const handlebars_1 = require("handlebars");
+const path_1 = require("path");
 const mapping = {
     "#Microsoft.Dynamics.CRM.LookupAttributeMetadata": "LookupAttribute",
     "#Microsoft.Dynamics.CRM.StringAttributeMetadata": "StringAttribute",
@@ -19,7 +20,7 @@ const mapping = {
     "#Microsoft.Dynamics.CRM.StateAttributeMetadata": "OptionSetAttribute"
 };
 const render = (attributes, name) => {
-    const templateBuffer = (0, fs_1.readFileSync)(`${__dirname}/template.hbs`);
+    const templateBuffer = (0, fs_1.readFileSync)((0, path_1.join)(__dirname, "..", "src", "template.hbs"));
     const template = (0, handlebars_1.compile)(templateBuffer.toString());
     // clean up the api response:
     const cleanedAttributes = attributes

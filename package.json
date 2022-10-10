@@ -8,12 +8,12 @@
     "node": "^16.0.0"
   },
   "scripts": {
-    "build": "tsc && npm run template",
-    "template": "./node_modules/.bin/copyfiles ./src/**/*.hbs ./dist/ --up 1"
+    "build": "tsc"
   },
   "author": "Lorenzo Bartolini",
   "dependencies": {
     "adal-node": "^0.2.2",
+    "fs-extra": "^10.1.0",
     "handlebars": "^4.7.7",
     "node-fetch": "^2.6.1",
     "node-localstorage": "^2.1.6"
@@ -22,7 +22,6 @@
     "@types/node": "^12.20.55",
     "@types/node-fetch": "^2.5.8",
     "@types/sinon": "^9.0.10",
-    "copyfiles": "^2.4.1",
     "coveralls": "^3.1.0",
     "sinon": "^9.2.4",
     "typescript": "^4.8.4"

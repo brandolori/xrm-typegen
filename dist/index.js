@@ -1,12 +1,20 @@
 #!/usr/bin/env node
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const credentials_1 = require("./credentials");
 const adal_node_1 = require("adal-node");
 const fs_1 = require("fs");
 const queries_1 = require("./queries");
 const renderer_1 = require("./renderer");
+const initTypings_1 = __importDefault(require("./initTypings"));
 const main = async () => {
+    if (process.argv.length > 2 && process.argv[2] == "--init-typings") {
+        (0, initTypings_1.default)();
+        return;
+    }
     const credentials = await (0, credentials_1.getCredentials)();
     console.log('authenticating');
     const authContext = new adal_node_1.AuthenticationContext(credentials.tenent);
