@@ -12,18 +12,14 @@
   },
   "author": "Lorenzo Bartolini",
   "dependencies": {
-    "adal-node": "^0.2.2",
+    "adal-node": "^0.2.3",
     "fs-extra": "^10.1.0",
     "handlebars": "^4.7.7",
-    "node-fetch": "^2.6.1",
-    "node-localstorage": "^2.1.6"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
-    "@types/node": "^12.20.55",
-    "@types/node-fetch": "^2.5.8",
-    "@types/sinon": "^9.0.10",
-    "coveralls": "^3.1.0",
-    "sinon": "^9.2.4",
+    "@types/node": "^16.11.65",
+    "@types/node-fetch": "^2.6.2",
     "typescript": "^4.8.4"
   },
   "files": [

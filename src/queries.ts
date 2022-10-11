@@ -16,11 +16,7 @@ export type Attribute = {
 
 type EntityDefinition = { Attributes: Attribute[], DisplayName: { LocalizedLabels: { Label: string }[] } }
 
-export const getEntityDefinition = async (
-    authToken: TokenResponse,
-    url: string,
-    entity: string,
-): Promise<EntityDefinition> => {
+export const getEntityDefinition = async (authToken: TokenResponse, url: string, entity: string) => {
     const response = await fetch(
         `${url}/api/data/v9.0/EntityDefinitions(LogicalName='${entity}')`
         + "?$expand=Attributes($select=LogicalName)",
@@ -29,5 +25,5 @@ export const getEntityDefinition = async (
             method: 'GET',
         },
     )
-    return await response.json()
+    return await response.json() as EntityDefinition
 }
