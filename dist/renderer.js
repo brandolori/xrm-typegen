@@ -1,9 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.render = void 0;
-const fs_1 = require("fs");
-const handlebars_1 = require("handlebars");
-const path_1 = require("path");
+import { readFileSync } from 'fs';
+import handlebars from 'handlebars';
 const mapping = {
     "#Microsoft.Dynamics.CRM.LookupAttributeMetadata": "LookupAttribute",
     "#Microsoft.Dynamics.CRM.StringAttributeMetadata": "StringAttribute",
@@ -19,9 +15,9 @@ const mapping = {
     "#Microsoft.Dynamics.CRM.StatusAttributeMetadata": "OptionSetAttribute",
     "#Microsoft.Dynamics.CRM.StateAttributeMetadata": "OptionSetAttribute"
 };
-const render = (attributes, name) => {
-    const templateBuffer = (0, fs_1.readFileSync)((0, path_1.join)(__dirname, "..", "src", "template.hbs"));
-    const template = (0, handlebars_1.compile)(templateBuffer.toString());
+export const render = (attributes, name) => {
+    const templateBuffer = readFileSync(new URL("../src/template.hbs", import.meta.url));
+    const template = handlebars.compile(templateBuffer.toString());
     // clean up the api response:
     const cleanedAttributes = attributes
         // remove invalid lines, being the ones that have enpty parameters or that are not yet mapped
@@ -37,5 +33,4 @@ const render = (attributes, name) => {
     });
     return dts;
 };
-exports.render = render;
-exports.default = exports.render;
+export default render;

@@ -1,23 +1,18 @@
 #!/usr/bin/env node
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const credentials_js_1 = require("./credentials.js");
-const adal_node_1 = require("adal-node");
-const fs_1 = require("fs");
-const queries_js_1 = require("./queries.js");
-const renderer_js_1 = require("./renderer.js");
-const initTypings_js_1 = __importDefault(require("./initTypings.js"));
+import { getCredentials } from "./credentials.js";
+import { AuthenticationContext } from 'adal-node';
+import { writeFileSync } from 'fs';
+import { getEntityDefinition } from './queries.js';
+import { render } from './renderer.js';
+import initTypings from "./initTypings.js";
 const main = async () => {
     if (process.argv.length > 2 && process.argv[2] == "--init-typings") {
-        (0, initTypings_js_1.default)();
+        initTypings();
         return;
     }
-    const credentials = await (0, credentials_js_1.getCredentials)();
+    const credentials = await getCredentials();
     console.log('authenticating');
-    const authContext = new adal_node_1.AuthenticationContext(credentials.tenent);
+    const authContext = new AuthenticationContext(credentials.tenent);
     authContext.acquireTokenWithClientCredentials(credentials.url, credentials.clientid, credentials.secret, async (error, response) => {
         if (error) {
             console.error(`authentication error: ${error.message}`);
@@ -30,7 +25,7 @@ const main = async () => {
             }
             const entity = process.argv[2];
             console.log('getting form metadata');
-            const entityDefinition = await (0, queries_js_1.getEntityDefinition)(response, credentials.url, entity);
+            const entityDefinition = await getEntityDefinition(response, credentials.url, entity);
             const { DisplayName, Attributes, error } = entityDefinition;
             if (error) {
                 console.log("error: ", error.message);
@@ -38,10 +33,10 @@ const main = async () => {
             }
             const noSpaceName = DisplayName.LocalizedLabels[0].Label.replace(" ", "");
             console.log("generating definition file");
-            const content = (0, renderer_js_1.render)(Attributes, noSpaceName);
+            const content = render(Attributes, noSpaceName);
             const fileName = `./${noSpaceName}.d.ts`;
             console.log(`writing ${fileName}`);
-            (0, fs_1.writeFileSync)(fileName, content);
+            writeFileSync(fileName, content);
             console.log('Finished!');
         }
     });

@@ -1,9 +1,10 @@
 {
   "name": "xrm-typegen",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A TypeScript Declaration Generator for Dynamics 365 Forms",
   "main": "dist/index.js",
   "bin": "dist/index.js",
+  "type": "module",
   "engines": {
     "node": "^16.0.0"
   },
@@ -16,11 +17,11 @@
     "adal-node": "^0.2.3",
     "fs-extra": "^10.1.0",
     "handlebars": "^4.7.7",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^3.2.10"
   },
   "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
     "@types/node": "^16.11.65",
-    "@types/node-fetch": "^2.6.2",
     "typescript": "^4.8.4"
   },
   "files": [
