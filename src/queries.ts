@@ -14,7 +14,11 @@ export type Attribute = {
     "LogicalName": string,
 }
 
-type EntityDefinition = { Attributes: Attribute[], DisplayName: { LocalizedLabels: { Label: string }[] } }
+type EntityDefinition = {
+    Attributes: Attribute[],
+    DisplayName: { LocalizedLabels: { Label: string }[] },
+    error: { message: string }
+}
 
 export const getEntityDefinition = async (authToken: TokenResponse, url: string, entity: string) => {
     const response = await fetch(

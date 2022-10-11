@@ -25,10 +25,12 @@ const main = async () => {
         credentials.secret,
         async (error, response) => {
             if (error) {
-                console.error(`Error: ${error.message}`)
+                console.error(`authentication error: ${error.message}`)
             }
             if ((response as TokenResponse).accessToken) {
+
                 console.log('connection success')
+
                 if (process.argv.length < 3) {
                     console.log("entity name not passed. Stopping execution")
                     return
@@ -36,16 +38,25 @@ const main = async () => {
                 const entity = process.argv[2]
 
                 console.log('getting form metadata')
-                const { Attributes, DisplayName } = await getEntityDefinition((response as TokenResponse), credentials.url, entity)
+
+                const entityDefinition = await getEntityDefinition((response as TokenResponse), credentials.url, entity)
+                const { DisplayName, Attributes, error } = entityDefinition
+
+                if (error) {
+                    console.log("error: ", error.message)
+                    return
+                }
 
                 const noSpaceName = DisplayName.LocalizedLabels[0].Label.replace(" ", "")
                 const capitalizedName = noSpaceName.substring(0, 1).toUpperCase() + noSpaceName.substring(1)
 
-                const content = render(Attributes, capitalizedName)
+                console.log("generating definition file")
 
+                const content = render(Attributes, capitalizedName)
                 const fileName = `./${capitalizedName}.d.ts`
 
                 console.log(`writing ${fileName}`)
+
                 writeFileSync(
                     fileName,
                     content,

@@ -20,7 +20,7 @@ const main = async () => {
     const authContext = new adal_node_1.AuthenticationContext(credentials.tenent);
     authContext.acquireTokenWithClientCredentials(credentials.url, credentials.clientid, credentials.secret, async (error, response) => {
         if (error) {
-            console.error(`Error: ${error.message}`);
+            console.error(`authentication error: ${error.message}`);
         }
         if (response.accessToken) {
             console.log('connection success');
@@ -30,9 +30,15 @@ const main = async () => {
             }
             const entity = process.argv[2];
             console.log('getting form metadata');
-            const { Attributes, DisplayName } = await (0, queries_js_1.getEntityDefinition)(response, credentials.url, entity);
+            const entityDefinition = await (0, queries_js_1.getEntityDefinition)(response, credentials.url, entity);
+            const { DisplayName, Attributes, error } = entityDefinition;
+            if (error) {
+                console.log("error: ", error.message);
+                return;
+            }
             const noSpaceName = DisplayName.LocalizedLabels[0].Label.replace(" ", "");
             const capitalizedName = noSpaceName.substring(0, 1).toUpperCase() + noSpaceName.substring(1);
+            console.log("generating definition file");
             const content = (0, renderer_js_1.render)(Attributes, capitalizedName);
             const fileName = `./${capitalizedName}.d.ts`;
             console.log(`writing ${fileName}`);
