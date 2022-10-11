@@ -12,7 +12,6 @@ const filePath = "xrm-typegen-config.json"
 
 export const getCredentials = async () => {
     try {
-
         return JSON.parse(readFileSync(filePath).toString()) as Credentials
     } catch (Exception) {
         return await generateCredentials()
