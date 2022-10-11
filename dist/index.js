@@ -37,10 +37,9 @@ const main = async () => {
                 return;
             }
             const noSpaceName = DisplayName.LocalizedLabels[0].Label.replace(" ", "");
-            const capitalizedName = noSpaceName.substring(0, 1).toUpperCase() + noSpaceName.substring(1);
             console.log("generating definition file");
-            const content = (0, renderer_js_1.render)(Attributes, capitalizedName);
-            const fileName = `./${capitalizedName}.d.ts`;
+            const content = (0, renderer_js_1.render)(Attributes, noSpaceName);
+            const fileName = `./${noSpaceName}.d.ts`;
             console.log(`writing ${fileName}`);
             (0, fs_1.writeFileSync)(fileName, content);
             console.log('Finished!');

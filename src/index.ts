@@ -48,12 +48,11 @@ const main = async () => {
                 }
 
                 const noSpaceName = DisplayName.LocalizedLabels[0].Label.replace(" ", "")
-                const capitalizedName = noSpaceName.substring(0, 1).toUpperCase() + noSpaceName.substring(1)
 
                 console.log("generating definition file")
 
-                const content = render(Attributes, capitalizedName)
-                const fileName = `./${capitalizedName}.d.ts`
+                const content = render(Attributes, noSpaceName)
+                const fileName = `./${noSpaceName}.d.ts`
 
                 console.log(`writing ${fileName}`)
 
