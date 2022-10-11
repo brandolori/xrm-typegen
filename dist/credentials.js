@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCredentials = void 0;
 const fs_1 = require("fs");
-const readline_1 = require("readline");
+const readline_1 = __importDefault(require("readline"));
 const filePath = "xrm-typegen-config.json";
 const getCredentials = async () => {
     try {
