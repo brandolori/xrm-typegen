@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs'
+import { readFileSync } from 'node:fs'
 import handlebars from 'handlebars'
 import { Attribute } from './queries.js'
 

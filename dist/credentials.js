@@ -1,13 +1,16 @@
-import { readFileSync, writeFileSync } from "fs";
-import Readline from "readline";
+import { readFileSync, writeFileSync } from "node:fs";
+import Readline from "node:readline";
 const filePath = "xrm-typegen-config.json";
-export const getCredentials = async () => {
+export const getSettings = async () => {
     try {
         return JSON.parse(readFileSync(filePath).toString());
     }
     catch (Exception) {
-        return await generateCredentials();
+        return await generateSettings();
     }
+};
+export const saveSettings = (settings) => {
+    writeFileSync(filePath, JSON.stringify(settings));
 };
 const promiseQuestion = (question) => new Promise((res, rej) => {
     const rl = Readline.createInterface(process.stdin, process.stdout);
@@ -16,13 +19,14 @@ const promiseQuestion = (question) => new Promise((res, rej) => {
         res(answ);
     });
 });
-const generateCredentials = async () => {
+const generateSettings = async () => {
     const obj = {
         clientid: await promiseQuestion("Insert clientid: "),
         secret: await promiseQuestion("Insert secret: "),
         tenent: await promiseQuestion("Insert tenent: "),
         url: await promiseQuestion("Insert url: "),
+        synchronizedEntities: []
     };
-    writeFileSync(filePath, JSON.stringify(obj));
+    saveSettings(obj);
     return obj;
 };

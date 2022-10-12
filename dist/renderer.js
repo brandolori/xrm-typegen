@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
 import handlebars from 'handlebars';
 const mapping = {
     "#Microsoft.Dynamics.CRM.LookupAttributeMetadata": "LookupAttribute",

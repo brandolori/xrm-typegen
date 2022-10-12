@@ -1,21 +1,26 @@
-import { readFileSync, writeFileSync } from "fs"
-import Readline from "readline"
+import { readFileSync, writeFileSync } from "node:fs"
+import Readline from "node:readline"
 
-export type Credentials = {
+export type Settings = {
     url: string
     tenent: string
     clientid: string
     secret: string
+    synchronizedEntities: string[]
 }
 
 const filePath = "xrm-typegen-config.json"
 
-export const getCredentials = async () => {
+export const getSettings = async () => {
     try {
-        return JSON.parse(readFileSync(filePath).toString()) as Credentials
+        return JSON.parse(readFileSync(filePath).toString()) as Settings
     } catch (Exception) {
-        return await generateCredentials()
+        return await generateSettings()
     }
+}
+
+export const saveSettings = (settings: Settings) => {
+    writeFileSync(filePath, JSON.stringify(settings))
 }
 
 const promiseQuestion = (question: string) => new Promise<string>((res, rej) => {
@@ -26,16 +31,17 @@ const promiseQuestion = (question: string) => new Promise<string>((res, rej) => 
     })
 })
 
-const generateCredentials = async () => {
+const generateSettings = async () => {
 
-    const obj: Credentials = {
+    const obj: Settings = {
         clientid: await promiseQuestion("Insert clientid: "),
         secret: await promiseQuestion("Insert secret: "),
         tenent: await promiseQuestion("Insert tenent: "),
         url: await promiseQuestion("Insert url: "),
+        synchronizedEntities: []
     }
 
-    writeFileSync(filePath, JSON.stringify(obj))
+    saveSettings(obj)
 
     return obj
 
