@@ -15,11 +15,13 @@ export default async (entity: string, token: TokenResponse, credentials: Setting
         throw new Error(error.message)
     }
 
+    const sortedAttributes = Attributes.sort((a, b) => a.LogicalName.localeCompare(b.LogicalName))
+
     const noSpaceName = DisplayName.LocalizedLabels[0].Label.replace(" ", "")
 
     console.log("generating definition file")
 
-    const content = render(Attributes, noSpaceName)
+    const content = render(sortedAttributes, noSpaceName)
     const fileName = `./${noSpaceName}.d.ts`
 
     console.log(`writing ${fileName}`)
