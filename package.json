@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "postinstall": "npm run build"
   },
   "author": "Lorenzo Bartolini",
   "dependencies": {
