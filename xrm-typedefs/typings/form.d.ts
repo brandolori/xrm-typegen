@@ -3,17 +3,21 @@ export { };
 
 declare global
 {
-    type ExecutionContext<TExtraArgs = void, TEntity extends AnyEntity = AnyEntity> = {
+    type ExecutionContext<TExtraArgs = void, TEntity extends Entity = AnyEntity> = {
         getFormContext: () => FormContext<TEntity>;
         getEventSource: () => any;
         getEventArgs: () => TExtraArgs;
     };
 
     type AnyEntity = {
+        [key: string]: AnyAttribute;
+    };
+
+    type Entity = {
         [key: string]: Attribute;
     };
 
-    type FormContext<TEntity extends AnyEntity = AnyEntity> = {
+    type FormContext<TEntity extends Entity = AnyEntity> = {
         getAttribute: <TField extends keyof TEntity> (id: TField) => TEntity[TField];
         getControl: <TField extends keyof TEntity> (id: TField) => Control;
         data: Data;
@@ -113,7 +117,7 @@ declare global
         setProgress: (stepProgress: number, message: string) => "invalid" | "success";
     };
 
-    type Ui<TEntity extends AnyEntity> = {
+    type Ui<TEntity extends Entity = AnyEntity> = {
         setFormNotification: (message: string, level: "ERROR" | "WARNING" | "INFO", uniqueId: string) => void;
         clearFormNotification: (id: string) => void;
         close: () => void;
@@ -130,7 +134,7 @@ declare global
     type TabContentType = "cardSections" | "singleComponent";
     type TabDisplayState = "expanded" | "collapsed";
 
-    type Tab<TEntity extends AnyEntity> = {
+    type Tab<TEntity extends Entity = AnyEntity> = {
         sections: {
             get: (sectionId: string) => Section<TEntity>;
         };
@@ -149,7 +153,7 @@ declare global
         setFocus: () => void;
     };
 
-    type Section<TEntity extends AnyEntity> = {
+    type Section<TEntity extends Entity = AnyEntity> = {
         controls: Control[];
         getLabel: () => string;
         getName: () => string;
