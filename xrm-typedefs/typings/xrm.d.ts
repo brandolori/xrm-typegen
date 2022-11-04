@@ -19,9 +19,13 @@ declare global
         openForm: (entityFormOptions: EntityFormOptions, formParameters: any) => Promise<{ savedEntityReference: { entityType: string, id: string, name: string; }[] | null; }>;
     };
 
-    type WebApi = {
-        online: any;
-        execute: (request: { getMetadata: () => any; }) => Promise<{ headers: any, ok: boolean, status: number, statusText: string, url: string, json: Promise<any>, text: Promise<string>; }>;
+    type WebApi = WebApiImpl & {
+        online: WebApiImpl;
+        offline: WebApiImpl;
+    };
+
+    type WebApiImpl = {
+        execute: (request: { getMetadata: () => any; }) => Promise<{ headers: any, ok: boolean, status: number, statusText: string, url: string, json: () => Promise<any>, text: Promise<string>; }>;
         createRecord: (entityLogicalName: string, data: any) => Promise<{ entityType: string, id: string; }>;
         retrieveRecord: (entityLogicalName: string, id: string, options?: string) => Promise<{ [key: string]: any; }>;
         retrieveMultipleRecords: (entityLogicalName: string,
