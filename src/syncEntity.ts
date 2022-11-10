@@ -17,7 +17,11 @@ export default async (entity: string, token: TokenResponse, credentials: Setting
 
     const sortedAttributes = Attributes.sort((a, b) => a.LogicalName.localeCompare(b.LogicalName))
 
-    const noSpaceName = DisplayName.LocalizedLabels[0].Label.replace(" ", "")
+    const noSpaceName = DisplayName.LocalizedLabels[0].Label
+        .split(" ")
+        .filter(el => el.length > 0)
+        .map(el => el.substring(0, 1).toUpperCase() + el.substring(1))
+        .join("")
 
     console.log("generating definition file")
 
