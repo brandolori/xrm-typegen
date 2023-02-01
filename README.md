@@ -1,8 +1,5 @@
 # Installation
-1. clone the repository
-2. `cd` into the folder
-3. `npm i`
-5. `npm i -g .`
+`npm i -g https://github.com/brandolori/xrm-typedef.git`
 
 # Usage
 `xrm-typegen --init-typings` generate all the files needed for the type system. launch this in your "WebResource" main folder  
