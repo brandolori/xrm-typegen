@@ -84,8 +84,14 @@ declare global
         setActiveProcess: (processId: string, callbackFunction: (status: "success" | "invalid") => void) => void;
         getEnabledProcesses: (callbackFunction: (processes: any) => void) => void;
 
-        moveNext: (callbackFunction: (status: "success" | "crossEntity" | "end" | "invalid" | "dirtyForm" | "stageGate") => void) => void;
-        movePrevious: (callbackFunction: (status: "success" | "crossEntity" | "beginning" | "invalid" | "dirtyForm" | "stageGate" | "preventDefault") => void) => void;
+        getActiveStage: () => Stage;
+        setActiveStage: (id: string) => void;
+
+        getStatus: () => ProcessStatus;
+        setStatus: (status: ProcessStatus | "invalid", callback: (status: ProcessStatus | "invalid") => void) => void;
+
+        moveNext: (callbackFunction?: (status: "success" | "crossEntity" | "end" | "invalid" | "dirtyForm" | "stageGate") => void) => void;
+        movePrevious: (callbackFunction?: (status: "success" | "crossEntity" | "beginning" | "invalid" | "dirtyForm" | "stageGate" | "preventDefault") => void) => void;
     };
 
     type Process = {
@@ -94,6 +100,8 @@ declare global
         getStages: () => Stage;
         isRendered: () => boolean;
     };
+
+    type ProcessStatus = "active" | "aborted" | "finished";
 
     type Stage = {
         getCategory: () => { getValue: () => number; };
