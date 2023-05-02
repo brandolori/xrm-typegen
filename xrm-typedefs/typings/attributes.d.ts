@@ -8,7 +8,7 @@ declare global
         setValue: (value: T) => void;
         addOnChange: (onChange: (context: ExecutionContext) => void) => void;
         removeOnChange: (onChange: (context: ExecutionContext) => void) => void;
-        controls: Control[];
+        controls: { get: () => Control[]; };
         setSubmitMode: (mode: "always" | "never" | "dirty") => void;
         getName: () => string;
         getRequiredLevel: () => RequirementLevel;

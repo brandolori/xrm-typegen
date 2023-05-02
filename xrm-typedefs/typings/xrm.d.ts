@@ -1,8 +1,6 @@
 // https://docs.microsoft.com/en-us/power-apps/developer/model-driven-apps/clientapi/reference
 export { };
 
-type Override<T, U> = Omit<T, keyof U> & U;
-
 declare global
 {
     const Xrm: {

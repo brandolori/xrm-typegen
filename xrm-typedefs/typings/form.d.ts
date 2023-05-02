@@ -133,6 +133,19 @@ declare global
         getViewPortHeight: () => number;
         getViewPortWidth: () => number;
         setFormEntityName: (name: string) => void;
+        quickForms: {
+            get: (id: string | number) => QuickFormControl;
+        };
+    };
+
+
+    type QuickFormControl = {
+        setDisabled: (disabled: boolean) => void;
+        getVisible: () => boolean;
+        /** If set to false, the control will not be shown */
+        setVisible: (visible: boolean) => void;
+        setLabel: (label: string) => void;
+        setFocus: () => void;
     };
 
     type TabContentType = "cardSections" | "singleComponent";
