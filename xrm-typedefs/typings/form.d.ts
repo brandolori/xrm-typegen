@@ -63,7 +63,7 @@ declare global {
         getEntityName: () => string
         getEntityReference: () => { entityType: string, id: string, name?: string }
         getPrimaryAttributeValue: () => string
-        isValid: () => string
+        isValid: () => boolean
         removeOnSave: (onSave: (context: ExecutionContext<SaveEventArgs>) => void) => void
         save: (saveOption: "saveandclose" | "saveandnew") => void
     }
@@ -197,6 +197,20 @@ declare global {
 
     type SaveEventArgs = {
         preventDefault: () => void
+        /**
+ Value  | Save mode          | Table                     
+--------|--------------------|---------------------------
+ 1      | Save               | All                       
+ 2      | Save and Close     | All                       
+ 5      | Deactivate         | All                       
+ 6      | Reactivate         | All                       
+ 7      | Send               | Email                     
+ 15     | Disqualify         | Lead                      
+ 16     | Qualify            | Lead                      
+ 47     | Assign             | User or Team owned tables 
+ 58     | Save as Completed  | Activities                
+ 59     | Save and New       | All                       
+ 70     | Auto Save          | All     * */
         getSaveMode: () => number
         isDefaultPrevented: () => boolean
     }
