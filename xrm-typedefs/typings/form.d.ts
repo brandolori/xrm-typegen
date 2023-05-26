@@ -20,6 +20,7 @@ declare global {
     }
 
     type Control = {
+        addOnLoad: (onLoad: (context: ExecutionContext) => void) => void
         getValue: () => string
         /** If set to true, the control will not be editable */
         setDisabled: (disabled: boolean) => void
@@ -124,6 +125,7 @@ declare global {
         setFormNotification: (message: string, level: "ERROR" | "WARNING" | "INFO", uniqueId: string) => void
         clearFormNotification: (id: string) => void
         close: () => void
+        /** 0: Undefined, 1: Create/QuickCreate, 2: Update, 3: Read Only, 4: Disabled, 6: Bulk Edit  */
         getFormType: () => number
         tabs: { get: (tabId: string) => Tab<TEntity> }
         refreshRibbon: (refreshAll?: boolean) => void
@@ -198,7 +200,14 @@ declare global {
         getSaveMode: () => number
         isDefaultPrevented: () => boolean
     }
+
     type LoadEventArgs = {
         getDataLoadState: () => number
+    }
+
+    type OnPreStageChangeArgs  = {
+        getDirection: () => "Next"|"Previous"
+        getStage: () => Stage
+        preventDefault: () => {}
     }
 }
