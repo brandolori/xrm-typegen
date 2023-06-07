@@ -63,7 +63,7 @@ declare global {
         getEntityName: () => string
         getEntityReference: () => { entityType: string, id: string, name?: string }
         getPrimaryAttributeValue: () => string
-        isValid: () => boolean
+        isValid: () => string
         removeOnSave: (onSave: (context: ExecutionContext<SaveEventArgs>) => void) => void
         save: (saveOption: "saveandclose" | "saveandnew") => void
     }
@@ -85,7 +85,7 @@ declare global {
         getEnabledProcesses: (callbackFunction: (processes: any) => void) => void
 
         getActiveStage: () => Stage
-        setActiveStage: (id: string) => void
+        setActiveStage: (id: string, callback: (result: string) => void) => void
 
         getStatus: () => ProcessStatus
         setStatus: (status: ProcessStatus | "invalid", callback: (status: ProcessStatus | "invalid") => void) => void
@@ -97,7 +97,7 @@ declare global {
     type Process = {
         getId: () => string
         getName: () => string
-        getStages: () => Stage
+        getStages: () => { get: () => Stage[] }
         isRendered: () => boolean
     }
 
@@ -197,20 +197,6 @@ declare global {
 
     type SaveEventArgs = {
         preventDefault: () => void
-        /**
- Value  | Save mode          | Table                     
---------|--------------------|---------------------------
- 1      | Save               | All                       
- 2      | Save and Close     | All                       
- 5      | Deactivate         | All                       
- 6      | Reactivate         | All                       
- 7      | Send               | Email                     
- 15     | Disqualify         | Lead                      
- 16     | Qualify            | Lead                      
- 47     | Assign             | User or Team owned tables 
- 58     | Save as Completed  | Activities                
- 59     | Save and New       | All                       
- 70     | Auto Save          | All     * */
         getSaveMode: () => number
         isDefaultPrevented: () => boolean
     }
@@ -219,8 +205,14 @@ declare global {
         getDataLoadState: () => number
     }
 
-    type OnPreStageChangeArgs  = {
-        getDirection: () => "Next"|"Previous"
+    type OnPreStageChangeArgs = {
+        getDirection: () => "Next" | "Previous"
+        getStage: () => Stage
+        preventDefault: () => {}
+    }
+
+    type OnStageChangeArgs = {
+        getDirection: () => "Next" | "Previous"
         getStage: () => Stage
         preventDefault: () => {}
     }
