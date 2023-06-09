@@ -6,6 +6,7 @@ declare global {
         getFormContext: () => FormContext<TEntity>
         getEventSource: () => any
         getEventArgs: () => TExtraArgs
+        getDepth: () => number
     }
 
     type AnyEntity = {
@@ -14,7 +15,7 @@ declare global {
 
     type FormContext<TEntity extends AnyEntity = AnyEntity> = {
         getAttribute: <TField extends keyof TEntity> (id: TField) => TEntity[TField]
-        getControl: <TField extends keyof TEntity> (id: TField) => Control
+        getControl: (<TField extends keyof TEntity> (id: TField) => Control) & (() => Control[])
         data: Data
         ui: Ui<TEntity>
     }
@@ -24,12 +25,13 @@ declare global {
         getValue: () => string
         /** If set to true, the control will not be editable */
         setDisabled: (disabled: boolean) => void
-        getVisible: () => boolean
+        getDisabled: () => boolean
         /** If set to false, the control will not be shown */
         setVisible: (visible: boolean) => void
+        getVisible: () => boolean
         setLabel: (label: string) => void
         setFocus: () => void
-        addNotification: (options: XrmNotificationOptions) => void
+        addNotification: (options: ControlNotificationOptions) => void
         clearNotification: (id: string) => void
         getOptions: () => Option[]
         addOption: (option: Option, index?: number) => void
@@ -37,6 +39,7 @@ declare global {
         clearOptions: () => void
         addCustomFilter: (filter: string, entityLogicalName?: string) => void
         addPreSearch: (onPreSearch: () => void) => void
+        getAttribute: () => Attribute
         addCustomView: (
             viewId: string,
             entityName: string,
@@ -185,7 +188,7 @@ declare global {
 
     type UserPriviledge = { canRead: boolean, canUpdate: boolean, canCreate: boolean }
 
-    type XrmNotificationOptions = {
+    type ControlNotificationOptions = {
         uniqueId: string
         notificationLevel: "ERROR" | "RECOMMENDATION"
         messages: string[]

@@ -6,6 +6,7 @@ declare global {
         Navigation: Navigation
         WebApi: WebApi
         Utility: Utility
+        App: App
         /** @deprecated use formContext instead */
         Page: any
     }
@@ -14,6 +15,7 @@ declare global {
         openAlertDialog: OpenAlertDialog
         openConfirmDialog: OpenConfirmDialog
         openForm: (entityFormOptions: EntityFormOptions, formParameters: any) => Promise<{ savedEntityReference: { entityType: string, id: string, name: string }[] | null }>
+        navigateTo: (pageInput: any, navigationOptions: any) => Promise<any>
     }
 
     type WebApi = WebApiImpl & {
@@ -38,6 +40,24 @@ declare global {
         showProgressIndicator: (message: string) => void
         closeProgressIndicator: () => void
         getGlobalContext: () => GlobalContext
+        getPageContext: () => PageContext
+        getEntityMetadata: (entityName: string, attributes: string | string[]) => Promise<any>
+    }
+
+    type App = {
+        addGlobalNotification: (options: GlobalNotificationOptions) => Promise<string>
+        clearGlobalNotification: (id: string) => Promise<any>
+    }
+
+    type GlobalNotificationOptions = {
+        level: 1 | 2 | 3 | 4
+        message: string
+        action?: {
+            actionLabel: string,
+            eventHandler: () => void
+        }
+        showCloseButton?: boolean
+        type: 2
     }
 
     type OpenAlertDialog = (alertStrings: AlertStrings, alertOptions?: DialogOptions, closeCallback?: () => any, alertCallback?: () => any) => Promise<void>
@@ -72,6 +92,17 @@ declare global {
     type GlobalContext = {
         client: Client
         userSettings: UserSettings
+        getClientUrl: () => string
+    }
+
+    type PageContext = {
+        input: {
+            pageType: "entityrecord"
+            entityName: string
+            entityId: string
+            createFromEntity: EntityLookup
+            formId: string
+        }
     }
 
     type Client = {
