@@ -38,7 +38,9 @@ declare global {
         removeOption: (value: number) => void
         clearOptions: () => void
         addCustomFilter: (filter: string, entityLogicalName?: string) => void
-        addPreSearch: (onPreSearch: () => void) => void
+        addPreSearch: (onPreSearch: (executionContext: ExecutionContext) => void) => void
+        removePreSearch: (onPreSearch: (executionContext: ExecutionContext) => void) => void
+        getName: () => string
         getAttribute: () => Attribute
         addCustomView: (
             viewId: string,
