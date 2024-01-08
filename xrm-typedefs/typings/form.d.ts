@@ -16,7 +16,7 @@ declare global {
     type FormContext<TEntity extends AnyEntity = AnyEntity> = {
         getAttribute: <TField extends keyof TEntity> (id: TField) => TEntity[TField]
         getControl: (<TField extends keyof TEntity> (id: TField) => Control) & (() => Control[])
-        data: Data
+        data: Data<TEntity>
         ui: Ui<TEntity>
     }
 
@@ -31,6 +31,7 @@ declare global {
         getVisible: () => boolean
         setLabel: (label: string) => void
         setFocus: () => void
+        getName: () => string
         addNotification: (options: ControlNotificationOptions) => void
         clearNotification: (id: string) => void
         getOptions: () => Option[]
@@ -38,9 +39,8 @@ declare global {
         removeOption: (value: number) => void
         clearOptions: () => void
         addCustomFilter: (filter: string, entityLogicalName?: string) => void
-        addPreSearch: (onPreSearch: (executionContext: ExecutionContext) => void) => void
+        addPreSearch: (onPreSearch: () => void) => void
         removePreSearch: (onPreSearch: (executionContext: ExecutionContext) => void) => void
-        getName: () => string
         getAttribute: () => Attribute
         addCustomView: (
             viewId: string,
@@ -51,8 +51,8 @@ declare global {
             isDefault: boolean) => void
     }
 
-    type Data = {
-        entity: EntityProperties
+    type Data<TEntity extends AnyEntity = AnyEntity> = {
+        entity: EntityProperties<TEntity>
         process: ProcessProperties
         getIsDirty: () => boolean
         isValid: () => boolean
@@ -60,7 +60,7 @@ declare global {
         save: (saveOptions?: { saveMode?: number }) => Promise<void>
     }
 
-    type EntityProperties = {
+    type EntityProperties<TEntity extends AnyEntity = AnyEntity> = {
         getIsDirty: () => boolean
         getDataXml: () => string
         getId: () => string
@@ -70,20 +70,21 @@ declare global {
         getPrimaryAttributeValue: () => string
         isValid: () => string
         removeOnSave: (onSave: (context: ExecutionContext<SaveEventArgs>) => void) => void
-        save: (saveOption: "saveandclose" | "saveandnew") => void
+        save: (saveOption: "saveandclose" | "saveandnew") => void;
+        attributes: { get: () => TEntity[keyof TEntity][]; }
     }
 
     type ProcessProperties = {
-        addOnPreProcessStatusChange: (onPreChange: (context: ExecutionContext) => void) => void
-        removeOnPreProcessStatusChange: (onPreChange: (context: ExecutionContext) => void) => void
-        addOnProcessStatusChange: (onChange: (context: ExecutionContext) => void) => void
-        removeOnProcessStatusChange: (onChange: (context: ExecutionContext) => void) => void
-        addOnPreStageChange: (onPreChange: (context: ExecutionContext) => void) => void
-        removeOnPreStageChange: (onPreChange: (context: ExecutionContext) => void) => void
-        addOnStageChange: (onChange: (context: ExecutionContext) => void) => void
-        removeOnStageChange: (onChange: (context: ExecutionContext) => void) => void
-        addOnStageSelected: (onSelected: (context: ExecutionContext) => void) => void
-        removeOnStageSelected: (onSelected: (context: ExecutionContext) => void) => void
+        addOnPreProcessStatusChange: (onPreChange: (context: ExecutionContext<any, any>) => void) => void
+        removeOnPreProcessStatusChange: (onPreChange: (context: ExecutionContext<any, any>) => void) => void
+        addOnProcessStatusChange: (onChange: (context: ExecutionContext<any, any>) => void) => void
+        removeOnProcessStatusChange: (onChange: (context: ExecutionContext<any, any>) => void) => void;
+        addOnPreStageChange: (onPreChange: (context: ExecutionContext<any, any>) => void) => void
+        removeOnPreStageChange: (onPreChange: (context: ExecutionContext<any, any>) => void) => void
+        addOnStageChange: (onChange: (context: ExecutionContext<any, any>) => void) => void
+        removeOnStageChange: (onChange: (context: ExecutionContext<any, any>) => void) => void
+        addOnStageSelected: (onSelected: (context: ExecutionContext<any, any>) => void) => void
+        removeOnStageSelected: (onSelected: (context: ExecutionContext<any, any>) => void) => void
 
         getActiveProcess: () => Process
         setActiveProcess: (processId: string, callbackFunction: (status: "success" | "invalid") => void) => void

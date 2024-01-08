@@ -5,8 +5,8 @@ declare global {
     type Attribute<T = any> = {
         getValue: () => T
         setValue: (value: T) => void
-        addOnChange: (onChange: (context: ExecutionContext) => void) => void
-        removeOnChange: (onChange: (context: ExecutionContext) => void) => void
+        addOnChange: (onChange: (context: ExecutionContext<void,any>) => void) => void
+        removeOnChange: (onChange: (context: ExecutionContext<void, any>) => void) => void
         controls: { get: () => Control[] }
         setSubmitMode: (mode: "always" | "never" | "dirty") => void
         getName: () => string
