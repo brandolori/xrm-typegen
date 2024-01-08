@@ -3,7 +3,7 @@ import { getSettings, saveSettings } from "./credentials.js";
 import { AuthenticationContext } from 'adal-node';
 import syncEntity from "./syncEntity.js";
 import { copy } from "fs-extra";
-if (process.argv.length > 2 && process.argv[2] == "--init-typings") {
+if (process.argv.length > 2 && process.argv[2] == "--init") {
     await copy(new URL("../xrm-typedefs", import.meta.url).pathname.substring(1), ".");
     console.log("success!");
     process.exit(0);
