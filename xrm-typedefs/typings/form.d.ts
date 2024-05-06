@@ -49,6 +49,8 @@ declare global {
             fetchXml: string,
             layoutXml: string,
             isDefault: boolean) => void
+        getDefaultView: () => string
+        setDefaultView: (viewId: string) => void
     }
 
     type Data<TEntity extends AnyEntity = AnyEntity> = {
