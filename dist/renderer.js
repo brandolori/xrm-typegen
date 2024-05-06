@@ -32,6 +32,6 @@ export const render = (attributes, name) => {
         attributes: cleanedAttributes,
         name
     });
-    return dts.replace(/(\r\n|\r|\n)/, "\r\n");
+    return dts.replace(/\r?\n/g, "\r\n");
 };
 export default render;
