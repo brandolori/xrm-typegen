@@ -37,7 +37,7 @@ export const render = (attributes: Attribute[], name: string): string => {
         attributes: cleanedAttributes,
         name
     })
-    return dts
+    return dts.replace(/(\r\n|\r|\n)/, "\r\n")
 }
 
 export default render
