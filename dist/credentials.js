@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import Readline from "node:readline";
-const filePath = "xrm-typegen-config.json";
+const filePath = "./typings/xrm-typegen-config.json";
 export const getSettings = async () => {
     try {
         return JSON.parse(readFileSync(filePath).toString());

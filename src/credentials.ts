@@ -9,7 +9,7 @@ export type Settings = {
     synchronizedEntities: string[]
 }
 
-const filePath = "xrm-typegen-config.json"
+const filePath = "./typings/xrm-typegen-config.json"
 
 export const getSettings = async () => {
     try {
