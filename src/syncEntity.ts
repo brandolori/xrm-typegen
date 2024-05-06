@@ -26,7 +26,7 @@ export default async (entity: string, token: TokenResponse, credentials: Setting
     console.log("generating definition file")
 
     const content = render(sortedAttributes, noSpaceName)
-    const fileName = `./${noSpaceName}.d.ts`
+    const fileName = `./typings/${noSpaceName}.d.ts`
 
     console.log(`writing ${fileName}`)
 

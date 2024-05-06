@@ -3,10 +3,14 @@ import { getSettings, saveSettings } from "./credentials.js";
 import { AuthenticationContext } from 'adal-node';
 import syncEntity from "./syncEntity.js";
 import { copy } from "fs-extra";
+import { existsSync } from "node:fs";
 if (process.argv.length > 2 && process.argv[2] == "--init") {
     await copy(new URL("../xrm-typedefs", import.meta.url).pathname.substring(1), ".");
     console.log("success!");
     process.exit(0);
+}
+if (!existsSync("./typings")) {
+    throw new Error("error: no './typings' directory found: this command should be run in your parent webresource directory, after running 'xrm-typegen --init'");
 }
 const settings = await getSettings();
 console.log('authenticating');

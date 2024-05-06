@@ -16,7 +16,7 @@ export default async (entity, token, credentials) => {
         .join("");
     console.log("generating definition file");
     const content = render(sortedAttributes, noSpaceName);
-    const fileName = `./${noSpaceName}.d.ts`;
+    const fileName = `./typings/${noSpaceName}.d.ts`;
     console.log(`writing ${fileName}`);
     writeFileSync(fileName, content);
     console.log('Finished!');
