@@ -14,8 +14,54 @@ declare global {
     type Navigation = {
         openAlertDialog: OpenAlertDialog
         openConfirmDialog: OpenConfirmDialog
-        openForm: (entityFormOptions: EntityFormOptions, formParameters: any) => Promise<{ savedEntityReference: { entityType: string, id: string, name: string }[] | null }>
-        navigateTo: (pageInput: any, navigationOptions: any) => Promise<any>
+        openForm: (entityFormOptions: EntityFormOptions, formParameters: any) => Promise<{ savedEntityReference: EntityReference[] | null }>
+        navigateTo: (pageInput: PageInput, navigationOptions: NavigationOptions) => Promise<EntityReference[] | undefined>
+    }
+    type PageInput = {
+        pageType: "entitylist"
+        entityName: string
+        viewId?: string
+        viewType?: string
+    } |
+    {
+        pageType: "entityrecord"
+        entityName: string
+        entityId?: string
+        createFromEntity?: EntityReference
+        data?: any
+        formId?: string
+        isCrossEntityNavigate?: boolean
+        isOfflineSyncError?: boolean
+        processId?: string
+        processInstanceId?: string
+        relationship?: any
+        selectedStageId?: string
+        tabName?: string
+    } |
+    {
+        pageType: "dashboard"
+        dashboardId: string
+    } |
+    {
+        pageType: "webresource"
+        webresourceName: string
+        data?: string
+    } |
+    {
+        pageType: "custom"
+        name: string
+        entityName?: string
+        recordId?: string
+    }
+
+    type NavigationOptions = {
+        /** Specify 1 to open inline, 2 to open in dialog */
+        target: 1 | 2
+        width: number | { value: number, unit: string }
+        height: number | { value: number, unit: string }
+        /** Specify 1 to open in the center, 2 to open on the side */
+        position?: 1 | 2
+        title?: string
     }
 
     type WebApi = WebApiImpl & {
@@ -33,8 +79,10 @@ declare global {
             successCallback?: () => any,
             errorCallback?: () => any) => Promise<{ entities: any[] }>
         updateRecord: (entityLogicalName: string, id: string, data: any) => Promise<{ entityType: string, id: string }>
-        deleteRecord: (entityLogicalName: string, id: string) => Promise<{ entityType: string, id: string, name: string }>
+        deleteRecord: (entityLogicalName: string, id: string) => Promise<EntityReference>
     }
+
+    type EntityReference = { entityType: string, id: string, name?: string }
 
     type Utility = {
         showProgressIndicator: (message: string) => void
@@ -42,6 +90,21 @@ declare global {
         getGlobalContext: () => GlobalContext
         getPageContext: () => PageContext
         getEntityMetadata: (entityName: string, attributes: string | string[]) => Promise<any>
+        lookupObjects: (options: LookupOptions) => Promise<EntityReference[]>
+    }
+
+    type LookupOptions = {
+        allowMultiSelect?: boolean
+        defaultEntityType?: string
+        defaultViewId?: string
+        disableMru?: boolean
+        entityTypes: string[]
+        filters?: {
+            filterXml: string
+            entityLogicalName: string
+        }[]
+        searchText?: string
+        viewIds?: string[]
     }
 
     type App = {
@@ -59,6 +122,8 @@ declare global {
         showCloseButton?: boolean
         type: 2
     }
+
+
 
     type OpenAlertDialog = (alertStrings: AlertStrings, alertOptions?: DialogOptions, closeCallback?: () => any, alertCallback?: () => any) => Promise<void>
 
@@ -96,13 +161,11 @@ declare global {
     }
 
     type PageContext = {
-        input: {
-            pageType: "entityrecord"
-            entityName: string
-            entityId: string
-            createFromEntity: EntityLookup
-            formId: string
-        }
+        pageType: "entityrecord"
+        entityName: string
+        entityId: string
+        createFromEntity: EntityReference
+        formId: string
     }
 
     type Client = {
