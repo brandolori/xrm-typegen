@@ -15,7 +15,7 @@ declare global {
         openAlertDialog: OpenAlertDialog
         openConfirmDialog: OpenConfirmDialog
         openForm: (entityFormOptions: EntityFormOptions, formParameters: any) => Promise<{ savedEntityReference: EntityReference[] | null }>
-        navigateTo: (pageInput: PageInput, navigationOptions: NavigationOptions) => Promise<EntityReference[] | undefined>
+        navigateTo: (pageInput: PageInput, navigationOptions?: NavigationOptions) => Promise<EntityReference[] | undefined>
     }
     type PageInput = {
         pageType: "entitylist"
