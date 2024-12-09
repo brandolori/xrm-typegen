@@ -199,7 +199,7 @@ declare global {
         notificationLevel: "ERROR" | "RECOMMENDATION"
         messages: string[]
         actions?: {
-            message: string,
+            message?: string,
             actions: (() => void)[]
         }[]
     }
