@@ -39,7 +39,7 @@ declare global {
         removeOption: (value: number) => void
         clearOptions: () => void
         addCustomFilter: (filter: string, entityLogicalName?: string) => void
-        addPreSearch: (onPreSearch: () => void) => void
+        addPreSearch: (onPreSearch: (context: ExecutionContext<void, any>) => void) => void
         removePreSearch: (onPreSearch: (executionContext: ExecutionContext) => void) => void
         getAttribute: () => Attribute
         addCustomView: (
@@ -51,6 +51,7 @@ declare global {
             isDefault: boolean) => void
         getDefaultView: () => string
         setDefaultView: (viewId: string) => void
+        setEntityTypes: (entityLogicalNames: string[]) => void
     }
 
     type Data<TEntity extends AnyEntity = AnyEntity> = {
