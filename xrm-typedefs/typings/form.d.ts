@@ -52,6 +52,8 @@ declare global {
         getDefaultView: () => string
         setDefaultView: (viewId: string) => void
         setEntityTypes: (entityLogicalNames: string[]) => void
+        setSrc: (src: string) => void
+        getSrc: () => string
     }
 
     type Data<TEntity extends AnyEntity = AnyEntity> = {

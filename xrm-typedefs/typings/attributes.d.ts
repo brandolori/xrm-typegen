@@ -5,7 +5,7 @@ declare global {
     type Attribute<T = any> = {
         getValue: () => T
         setValue: (value: T) => void
-        addOnChange: (onChange: (context: ExecutionContext<void,any>) => void) => void
+        addOnChange: (onChange: (context: ExecutionContext<void, any>) => void) => void
         removeOnChange: (onChange: (context: ExecutionContext<void, any>) => void) => void
         controls: { get: () => Control[] }
         setSubmitMode: (mode: "always" | "never" | "dirty") => void
@@ -46,6 +46,7 @@ declare global {
     type OptionSetAttributeOverrides = {
         getOption: () => Option
         getOptions: () => Option[]
+        getInitialValue: () => number
     }
 
     type LookupAttribute = Attribute<EntityLookup[]> & LookupAttributeOverrides
