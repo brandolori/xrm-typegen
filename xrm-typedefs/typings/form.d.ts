@@ -73,7 +73,8 @@ declare global {
         getPrimaryAttributeValue: () => string
         isValid: () => string
         removeOnSave: (onSave: (context: ExecutionContext<SaveEventArgs>) => void) => void
-        save: (saveOption: "saveandclose" | "saveandnew") => void;
+        /** @deprecated use formContext.data.save instead */
+        save: (saveOption?: "saveandclose" | "saveandnew") => void;
         attributes: { get: () => TEntity[keyof TEntity][]; }
     }
 
