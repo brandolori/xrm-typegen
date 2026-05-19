@@ -91,7 +91,8 @@ type ProcessProperties = {
     removeOnStageSelected: (onSelected: (context: ExecutionContext<any, any>) => void) => void
 
     getActiveProcess: () => Process
-    setActiveProcess: (processId: string, callbackFunction: (status: "success" | "invalid") => void) => void
+    setActiveProcess: (processId: string, callbackFunction?: (status: "success" | "invalid") => void) => void
+    setActiveProcessInstance: (processInstanceId: string, callbackFunction?: (status: "success" | "invalid") => void) => void
     getEnabledProcesses: (callbackFunction: (processes: any) => void) => void
 
     getActiveStage: () => Stage
@@ -137,7 +138,7 @@ type Ui<TEntity extends AnyEntity = AnyEntity> = {
     close: () => void
     /** 0: Undefined, 1: Create/QuickCreate, 2: Update, 3: Read Only, 4: Disabled, 6: Bulk Edit  */
     getFormType: () => number
-    tabs: { get: (tabId: string) => Tab<TEntity> }
+    tabs: { get: ((tabId: string) => Tab<TEntity>) & (() => Tab<TEntity>[]) }
     refreshRibbon: (refreshAll?: boolean) => void
     addOnLoad: (onLoad: ExecutionContext<LoadEventArgs, TEntity>) => void
     removeOnLoad: (onLoad: ExecutionContext<LoadEventArgs, TEntity>) => void
@@ -164,7 +165,7 @@ type TabDisplayState = "expanded" | "collapsed"
 
 type Tab<TEntity extends AnyEntity = AnyEntity> = {
     sections: {
-        get: (sectionId: string) => Section<TEntity>
+        get: ((sectionId: string) => Section<TEntity>) & (() => Section<TEntity>[])
     }
     getContentType: () => TabContentType
     getDisplayState: () => TabDisplayState

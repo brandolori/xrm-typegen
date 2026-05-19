@@ -92,6 +92,8 @@ type Utility = {
     getPageContext: () => PageContext
     getEntityMetadata: (entityName: string, attributes: string | string[]) => Promise<any>
     lookupObjects: (options: LookupOptions) => Promise<EntityReference[]>
+    /** @deprecated use Xrm.Navigation.openAlertDialog instead */
+    alertDialog: (message: string, onClose?: () => void) => void
 }
 
 type LookupOptions = {
