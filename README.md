@@ -1,5 +1,6 @@
 # Installation
-`npm i -g https://github.com/brandolori/xrm-typegen.git`
+`npm i -g https://github.com/brandolori/xrm-typegen.git`  
+`npm i -g .`
 
 # Usage
 Launch these commands your "WebResource" main folder
@@ -11,6 +12,6 @@ Launch these commands your "WebResource" main folder
 1. Add feature
 2. Bump version
 3. Build
-4. Push
-5. Install globally
+4. Install globally
+5. Push
 6. Init in the desired projects

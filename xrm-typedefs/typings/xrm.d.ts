@@ -12,6 +12,8 @@ type Xrm = {
     Page: FormContext
 }
 
+declare const Xrm: Xrm
+
 type Navigation = {
     openAlertDialog: OpenAlertDialog
     openConfirmDialog: OpenConfirmDialog
