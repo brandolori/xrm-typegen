@@ -12,6 +12,7 @@ const mapping = {
     "#Microsoft.Dynamics.CRM.DecimalAttributeMetadata": "NumberAttribute",
     "#Microsoft.Dynamics.CRM.BooleanAttributeMetadata": "BooleanAttribute",
     "#Microsoft.Dynamics.CRM.PicklistAttributeMetadata": "OptionSetAttribute",
+    "#Microsoft.Dynamics.CRM.MultiSelectPicklistAttributeMetadata": "OptionSetAttribute",
     "#Microsoft.Dynamics.CRM.StatusAttributeMetadata": "OptionSetAttribute",
     "#Microsoft.Dynamics.CRM.StateAttributeMetadata": "OptionSetAttribute",
     "#Microsoft.Dynamics.CRM.FileAttributeMetadata": "FileAttribute",
